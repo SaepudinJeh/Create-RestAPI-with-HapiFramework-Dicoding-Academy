@@ -35,7 +35,6 @@ const addBookHandler = (request, h) => {
     updatedAt,
   };
 
-  console.log(newBook);
   // check body name
   if (newBook.name === '' || newBook.name === undefined) {
     const response = h.response({
@@ -83,10 +82,17 @@ const addBookHandler = (request, h) => {
   return response;
 };
 
-const getAllNoteHandler = () => ({
+const getAllBooksHandler = () => ({
   status: 'success',
   data: {
-    notes: books,
+    books: books.map((data) => {
+      const dataBook = {
+        id: data.id,
+        name: data.name,
+        publisher: data.publisher,
+      };
+      return dataBook;
+    }),
   },
 });
 
@@ -174,7 +180,7 @@ const deleteNoteByIdHandler = (request, h) => {
 
 module.exports = {
   addBookHandler,
-  getAllNoteHandler,
+  getAllBooksHandler,
   editNoteByIdHandler,
   getNoteByIdHandler,
   deleteNoteByIdHandler,
