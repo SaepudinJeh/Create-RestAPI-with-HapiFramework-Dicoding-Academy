@@ -1,4 +1,5 @@
 const Hapi = require('@hapi/hapi');
+const qs = require('qs');
 
 const routes = require('./routes');
 
@@ -10,6 +11,9 @@ const init = async () => {
       cors: {
         origin: ['*'],
       },
+    },
+    query: {
+      parser: (query) => qs.parse(query),
     },
   });
 
