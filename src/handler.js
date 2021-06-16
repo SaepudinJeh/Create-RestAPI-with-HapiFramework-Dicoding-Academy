@@ -47,6 +47,18 @@ const addBookHandler = (request, h) => {
     return response;
   }
 
+  // check readPage > pageCount
+  if (newBook.readPage > newBook.pageCount) {
+    const response = h.response({
+      status: 'fail',
+      message: 'Gagal menambahkan buku. readPage tidak boleh lebih besar dari pageCount',
+    });
+
+    response.code(400);
+    return response;
+  }
+
+  // Create Books
   books.push(newBook);
 
   const isSuccess = books.filter((book) => book.id === id).length > 0;
