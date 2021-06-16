@@ -96,36 +96,36 @@ const getAllBooksHandler = () => ({
   },
 });
 
-const getNoteByIdHandler = (request, h) => {
-  const { id } = request.params;
+const getBookByIdHandler = (request, h) => {
+  const { booksId } = request.params;
 
-  const book = books.filter((index) => index.id === id)[0];
+  const data = books.filter((index) => index.id === booksId)[0];
 
-  if (book !== undefined) {
+  if (data !== undefined) {
     return {
       status: 'success',
       data: {
-        note: book,
+        book: data,
       },
     };
   }
 
   const response = h.response({
     status: 'fail',
-    message: 'Catatan tidak ditemukan',
+    message: 'Buku tidak ditemukan',
   });
 
   response.code(404);
   return response;
 };
 
-const editNoteByIdHandler = (request, h) => {
-  const { id } = request.params;
+const editBookByIdHandler = (request, h) => {
+  const { booksId } = request.params;
 
   const { title, tags, body } = request.payload;
   const updatedAt = new Date().toISOString();
 
-  const index = books.findIndex((book) => book.id === id);
+  const index = books.findIndex((book) => book.id === booksId);
 
   if (index !== -1) {
     books[index] = {
@@ -181,7 +181,7 @@ const deleteNoteByIdHandler = (request, h) => {
 module.exports = {
   addBookHandler,
   getAllBooksHandler,
-  editNoteByIdHandler,
-  getNoteByIdHandler,
+  editBookByIdHandler,
+  getBookByIdHandler,
   deleteNoteByIdHandler,
 };
